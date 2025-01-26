@@ -1,0 +1,10 @@
+## Interface: 110002
+## Title: RPS Emotes
+## Author: TestUnit
+## Version: 2.2 TWW
+## URL: https://rp-wow.ru/
+## DefaultState: Enabled
+## IconTexture: Interface\AddOns\RPSDarkmoon\resources\darkmoon.png
+## SavedVariables: RPSEmotesFrameworkIconData, RPSEmoteFrameworkFavourites
+
+RPSEmotes.xml
