@@ -191,89 +191,27 @@ RPSEmoteFramework.EmoteList.Initialized = false;
 
 
 
--- function RPSEmoteFramework:ValidateFavourites()
--- 	if (not self.EmoteList[RPSEmoteFrameworkFavourites[#RPSEmoteFrameworkFavourites]]) then
--- 		RPSEmoteFrameworkFavourites = {};
--- 	end
--- end
-
--- function RPSEmoteFramework:PreGenerateShowAuras()
--- 	self.EmoteList.ToShow = {};
--- 	if (RPSEmoteFavCheckBox:GetChecked()) then
--- 		for i = 1, #RPSEmoteFrameworkFavourites do
--- 			table.insert(self.EmoteList.ToShow, RPSEmoteFrameworkFavourites[i]);
--- 		end
--- 	else
--- 		for i = 1, #self.EmoteList do
--- 			table.insert(self.EmoteList.ToShow, i);
--- 		end
--- 	end
--- end
-
--- function RPSEmoteFramework:EmotesSearch(input, key)
--- 	self.EmoteList.ToShow = {};
-
--- 	if (RPSEmoteFavCheckBox:GetChecked()) then
--- 		input = {};
--- 		for i = 1, #RPSEmoteFrameworkFavourites do
--- 			table.insert(input, self.EmoteList[RPSEmoteFrameworkFavourites[i]]);
--- 		end
--- 	end
-
--- 	for i = 1, #input do
--- 		if string.find(strlower(input[i][3]), strlower(key)) ~= nil then
--- 			table.insert(self.EmoteList.ToShow, input[i][1]);
--- 		elseif string.find(strlower(input[i][4]), strlower(key)) ~= nil then
--- 			table.insert(self.EmoteList.ToShow, input[i][1]);
--- 		elseif string.find(tostring(strlower(input[i][1])), strlower(key)) ~= nil then
--- 			table.insert(self.EmoteList.ToShow, input[i][1]);
--- 		elseif string.find(tostring(strlower(input[i][2])), strlower(key)) ~= nil then
--- 			table.insert(self.EmoteList.ToShow, input[i][1]);
--- 		end
--- 	end
--- end
-
-function RPSEmoteFramework:FavouritesSearch(number)
-	for i = 1, #RPSEmoteFrameworkFavourites do
-		if (RPSEmoteFrameworkFavourites[i] == number) then
-			return i;
-		end
-	end
-	return false
-end
-
 function RPSEmoteFramework:SwitchMainFrame()
 	RPSEmote:SetShown(not RPSEmote:IsVisible());
 end
 
--- function RPSEmoteFramework:cutter(msg)
-	-- return string.match(msg, "%d+")
--- end
 
 function RPSEmoteFramework:OnEnable()
-	-- self:ValidateFavourites();
-	-- self:PreGenerateShowAuras();
-	-- self.EmoteList.Initialized = true;
-	-- self:GenerateScrollMenu();
-
-	-- RPSEmoteClearButton:HookScript("OnClick", function()
-	-- 	RPSEmoteFramework:EmotesSearch(RPSEmoteFramework.EmoteList, RPSEmote.searchBox:GetText()); RPSEmoteFramework:GenerateScrollMenu();
-	-- end);
-	-- RPS_AUTHORSHIP:SetScript("OnEnter", function()
-	-- 	GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
-	-- 	GameTooltip:AddDoubleLine("RPS Emotes:", "TestUnit", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:AddDoubleLine("Версия:", "2.2 TWW", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:AddDoubleLine("Спасибо:", "-SeMGa!", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:AddDoubleLine(" ", "ilia", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:AddDoubleLine(" ", "& alchemist", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:AddDoubleLine(" ", "Aidian96", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:AddDoubleLine(" ", "Antonystar", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:AddDoubleLine(" ", "Hlebes", 1, 1, 1, 1, 0.96, 0.41);
-	-- 	GameTooltip:Show();
-	-- end);
-	-- RPS_AUTHORSHIP:SetScript("OnLeave", function()
-	-- 	GameTooltip:Hide();
-	-- end);
+	RPS_AUTHORSHIP:SetScript("OnEnter", function()
+		GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+		GameTooltip:AddDoubleLine("RPS Emotes:", "TestUnit", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:AddDoubleLine("Версия:", "2.2 TWW", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:AddDoubleLine("Спасибо:", "-SeMGa!", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:AddDoubleLine(" ", "ilia", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:AddDoubleLine(" ", "& alchemist", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:AddDoubleLine(" ", "Aidian96", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:AddDoubleLine(" ", "Antonystar", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:AddDoubleLine(" ", "Hlebes", 1, 1, 1, 1, 0.96, 0.41);
+		GameTooltip:Show();
+	end);
+	RPS_AUTHORSHIP:SetScript("OnLeave", function()
+		GameTooltip:Hide();
+	end);
 end
 
 function RPSEmoteFramework:EnableDrag(frame)
@@ -281,18 +219,6 @@ function RPSEmoteFramework:EnableDrag(frame)
 	frame:SetScript("OnDragStart", frame.StartMoving);
 	frame:SetScript("OnDragStop", frame.StopMovingOrSizing);
 end
-
--- function RPSEmoteFramework:GenerateScrollMenu()
--- 	FauxScrollFrame_Update(RPSEmoteScrollBar, #self.EmoteList.ToShow, 10, 32);
-
--- 	for jBtn = 1, 10 do
--- 		lineplusoffset = jBtn + FauxScrollFrame_GetOffset(RPSEmoteScrollBar);
--- 		self.EmoteList.lineplusoffset[jBtn] = tonumber(lineplusoffset);
--- 		--print("RPSEmoteFramework.EmoteList.lineplusoffset["..jBtn.."]:"..RPSEmoteFramework.EmoteList.lineplusoffset[jBtn])
--- 	end
-
--- 	self:RPSEmoteScrollBar_Update();
--- end
 
 
 function RPSEmoteFramework:OnInitialize()
@@ -322,7 +248,6 @@ function RPSEmoteFramework:OnInitialize()
 	icon = LibStub("LibDBIcon-1.0");
 	icon:Register("RPSEmotesFrameworkIconDatarkmoonIcon", LDBObject, RPSEmotesFrameworkIconData);
 	icon:Show("RPSEmotesFrameworkIconDatarkmoonIcon");
-	-- RPSEmoteFramework:SwitchMainFrame();
 
 
 	RPSEmoteFramework.DataProvider = CreateDataProvider()
@@ -346,104 +271,108 @@ function RPSEmoteFramework:GenerateScrollData()
        RPSEmoteFramework.DataProvider:Insert(emoteData)
     end
 	RPSEmoteFramework.ScrollView:SetElementInitializer("RPSEmoteEntryTemplate", Initializer)
-
 end
 
 function Initializer(button, data)
-	button:SetText("[ |cFFFD8A00" .. data[1] .. "|r ] " .. data[4]);
+	button:SetText("[ |cFFFD8A00" .. data[1] .. "|r ] " .. data[4])
+	button:SetScript("OnClick", function()
+		local message = ".mod standstate "..data[2]
+		C_ChatInfo.SendAddonMessage(RPSCoreFramework.Prefix, message, "WHISPER", UnitName("player"));
+	end)
+	button:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+		GameTooltip:AddDoubleLine("Название эмоции:", data[3], 1, 1, 1, 0.71, 1, 1);
+		GameTooltip:AddDoubleLine("Номер эмоции:", data[2], 1, 1, 1, 0.71, 1, 1);
+		GameTooltip:Show();
+	end)
+	button:SetScript("OnLeave", function()
+		GameTooltip:Hide();
+	end)
 
+	button.Favourites:SetScript("OnClick", function()
+			if (not RPSEmoteFramework:FavouritesSearch(data[1])) then
+				table.insert(RPSEmoteFrameworkFavourites, data);
+				print(RPSEmoteFrameworkFavourites[2])
+				return
+			end
+			table.remove(RPSEmoteFrameworkFavourites, data);
+			print(RPSEmoteFrameworkFavourites[1])
+	end)
+end
+
+function RPSEmoteFramework:CreateGameToolTip(self)
+	GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+	GameTooltip:AddDoubleLine("Название эмоции:", data[3], 1, 1, 1, 0.71, 1, 1);
+	GameTooltip:AddDoubleLine("Номер эмоции:", data[2], 1, 1, 1, 0.71, 1, 1);
+	GameTooltip:Show();
+end
+
+local function PopulateNewDataProvider(newData)
+    DataProvider = CreateDataProvider(newData)
+    RPSEmoteFramework.ScrollView:SetDataProvider(DataProvider)
+end
+
+function RPSEmoteFramework:ValidateFavourits()
+
+	PopulateNewDataProvider(RPSEmoteFrameworkFavourites)
+
+end
+
+function RPSEmoteFramework.OnTextChanged()
+    local query = RPSEmoteFramework.SearchBox:GetText();
+
+		if (RPSEmote.FavCheckBox:GetChecked()) then
+			RPSEmoteFramework:ValidateFavourits()
+			local matches = {}
+			print("Checked")
+			for _, element in ipairs(RPSEmoteFrameworkFavourites) do
+				table.insert(matches, element);
+			end
+		end
+
+
+    local matches = {}
+    for _, element in ipairs(RPSEmoteFramework.EmoteList) do
+        if string.find(strlower(element[3]), strlower(query)) ~=nil then
+            tinsert(matches, element)
+		elseif string.find(strlower(element[4]), strlower(query)) ~=nil then
+            tinsert(matches, element)
+		elseif string.find(tostring(strlower(element[1])), strlower(query)) ~=nil then
+            tinsert(matches, element)
+		elseif string.find(tostring(strlower(element[2])), strlower(query)) ~=nil then
+            tinsert(matches, element)
+        end
+    end
+
+    PopulateNewDataProvider(matches)
 end
 
 
 
--- function RPSEmoteFramework:OnTextChanged()
---     local query = RPSEmoteFramework.SearchBox:GetText();
 
--- 	if (RPSEmote.FavCheckBox:GetChecked()) then
--- 		input = {};
--- 		for i = 1, #RPSEmoteFrameworkFavourites do
--- 			table.insert(input, self.EmoteList[RPSEmoteFrameworkFavourites[i]]);
--- 		end
--- 	end
 
---     local checkmatches = {}
---     for _, element in ipairs(RPSEmoteFramework.EmoteList) do
---         if element[1] == query then
---             tinsert(checkmatches, element)
--- 		elseif element[2] == query then
--- 			tinsert(checkmatches, element)
--- 		elseif element[3] == query then
--- 			tinsert(checkmatches, element)
--- 		elseif element[4] == query then
--- 			tinsert(checkmatches, element)
--- 		end
---     end
 
--- 	RPSEmoteFramework.DataProvider = CreateDataProvider(checkmatches)
---     RPSEmoteFramework.ScrollView:SetDataProvider(RPSEmoteFramework.DataProvider)
--- end
-
--- function RPSEmoteFramework:RPSEmoteScrollBar_Update()
--- 	if (self.EmoteList.Initialized) then
--- 		for line = 1, #self.EmoteList.lineplusoffset do
--- 			local lineplusoffset = self.EmoteList.lineplusoffset[line];
--- 			if (lineplusoffset <= #self.EmoteList.ToShow) then
--- 				self.DB["RPSEmoteEntry"..line][1] = self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][1];
--- 				self.DB["RPSEmoteEntry"..line][2] = self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][2];
--- 				if (self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][4] == "") then
--- 					_G["RPSEmoteEntry"..line.."Name"]:SetText("[ |cFFFD8A00"..self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][1].."|r ] "..self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][3]);
--- 				else
--- 					_G["RPSEmoteEntry"..line.."Name"]:SetText("[ |cFFFD8A00"..self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][1].."|r ] "..self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][4]);
--- 				end
--- 				--_G["RPSEmoteEntry"..line.."Favourites"]:UnlockHighlight();
--- 				_G["RPSEmoteEntry"..line.."FavouritesIndicator"]:Hide();
--- 				if (self:FavouritesSearch(self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][1])) then
--- 					_G["RPSEmoteEntry"..line.."FavouritesIndicator"]:Show();
--- 					--_G["RPSEmoteEntry"..line.."Favourites"]:LockHighlight();
--- 				end
--- 				self.DB["RPSEmoteEntry"..line.."Favourites"] = self.EmoteList[self.EmoteList.ToShow[lineplusoffset]][1];
--- 				self.DB.Frames["RPSEmoteEntry"..line]:Show();
--- 			else
--- 				self.DB.Frames["RPSEmoteEntry"..line]:Hide();
--- 			end
--- 		end
--- 	end
--- end
-
--- function RPSEmoteFramework:RPSEmoteOnClick(arg1)
--- 	local message = ".mod standstate "..self.EmoteList[self.DB[arg1][1]][2];
--- 	C_ChatInfo.SendAddonMessage(RPSCoreFramework.Prefix, message, "WHISPER", UnitName("player"));
--- end
-
--- function RPSEmoteFramework:CreateGameToolTip(arg1)
--- 	GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
--- 	GameTooltip:AddDoubleLine("Название эмоции:", RPSEmoteFramework.EmoteList[self.DB[arg1][1]][3], 1, 1, 1, 0.71, 1, 1);
--- 	GameTooltip:AddDoubleLine("Номер эмоции:", RPSEmoteFramework.EmoteList[self.DB[arg1][1]][2], 1, 1, 1, 0.71, 1, 1);
--- 	GameTooltip:Show();
--- end
-
--- function RPSEmoteFramework:ProcessFavourites(arg1)
--- 	if (not self:FavouritesSearch(self.DB[arg1])) then
--- 		table.insert(RPSEmoteFrameworkFavourites, self.DB[arg1]);
+-- function RPSEmoteFramework:ProcessFavourites(data)
+-- 	print(data)
+-- 	if (not self:FavouritesSearch(data[1])) then
+-- 		table.insert(RPSEmoteFrameworkFavourites, data);
+-- 		for _, emoteData in ipairs(RPSEmoteFrameworkFavourites) do
+-- 			print(emoteData)
+-- 		 end
 -- 		return
 -- 	end
--- 	table.remove(RPSEmoteFrameworkFavourites, self:FavouritesSearch(tonumber(self.DB[arg1]))); -- Removes EmoteNumber from Favourites
--- 	if (RPSEmoteFavCheckBox:GetChecked()) then
--- 		self:PreGenerateShowAuras();
--- 		self:GenerateScrollMenu();
--- 	end
+-- 	table.remove(RPSEmoteFrameworkFavourites, data); -- Removes EmoteNumber from Favourites
 -- end
 
--- function RPSEmoteFramework:EmotesCheckBoxProcess()
--- 	self:PreGenerateShowAuras();
--- 	if (RPSEmoteFavCheckBox:GetChecked()) then
--- 		self:EmotesSearch(self.EmoteList, RPSEmote.searchBox:GetText());
--- 	else
--- 		self:EmotesSearch(self.EmoteList, RPSEmote.searchBox:GetText());
--- 	end
+function RPSEmoteFramework:FavouritesSearch(number)
+	for i = 1, #RPSEmoteFrameworkFavourites do
+		if (RPSEmoteFrameworkFavourites[i] == number) then
+			return i;
+		end
+	end
+	return false
+end
 
--- 	self:GenerateScrollMenu();
--- end
 
 RPS_BACKDROP_MAINFRAME_32_64_5555 = {
 	edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",

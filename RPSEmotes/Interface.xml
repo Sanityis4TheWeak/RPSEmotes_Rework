@@ -1,15 +1,17 @@
 <Ui>
-	<Button name="RPSEmoteEntryTemplate" virtual="true">
+	<Button name="RPSEmoteEntryTemplate" virtual="true" text="place" justifyH="LEFT">
 		<Size x="150" y="25" />
 		<NormalFont style="GameFontHighlightLeft" />
-		<Layers>
-
-		</Layers>
+		<!-- <Layers>
+			<Layer>
+			<FontString parentKey="Text" text="PLACE" justifyH="LEFT" inherits="SystemFont_Med1"/>
+			</Layer>
+		</Layers> -->
 		<Frames>
-			<Button name="$parentFavourites" >
+			<Button name="$parentFavourites" parentKey="Favourites" justifyH="LEFT">
 				<Size x="16" y="16" />
 				<Anchors>
-					<Anchor relativeTo="$parent" relativePoint="TOPRIGHT" x="-3" y="-6" />
+					<Anchor relativePoint="RIGHT" x="-23" y="8" />
 				</Anchors>
 				<NormalTexture file="Interface/COMMON/ReputationStar">
 					<TexCoords left="0.53125" right="0.96875" top="0.03125" bottom="0.46875" />
@@ -20,23 +22,18 @@
 				<HighlightTexture file="Interface\COMMON\ReputationStar-Glow" alphaMode="ADD">
 					<TexCoords left="0.234375" right="0.765625" top="0.265625" bottom="0.828125" />
 				</HighlightTexture>
-				<Layers>
+				<!-- <Layers>
 					<Layer level="ARTWORK">
-						<Texture alphaMode="ADD" name="$parentIndicator"
-							file="Interface\COMMON\FavoritesIcon">
+						<Texture alphaMode="ADD" name="$parentIndicator" file="Interface\COMMON\FavoritesIcon">
 							<Size x="16" y="16" />
 							<TexCoords left="0.03125" right="0.78125" top="0.03125" bottom="0.6875" />
 							<Anchors>
-								<Anchor relativeTo="$parent" relativePoint="TOPRIGHT" x="-16" y="0" />
+								<Anchor relativePoint="TOPRIGHT"/>
 							</Anchors>
 						</Texture>
 					</Layer>
-				</Layers>
+				</Layers> -->
 				<Scripts>
-					<!-- <PostClick>
-						RPSEmoteFramework:ProcessFavourites(self:GetName());
-						RPSEmoteFramework:EmotesCheckBoxProcess();
-					</PostClick> -->
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
 						GameTooltip:AddLine("|cFFFFFFFFИзбранное|r")
@@ -185,7 +182,8 @@
 				</Anchors>
 				<Scripts>
 					<OnTextChanged>
-						RPSEmoteFramework:OnTextChanged();
+						RPSEmoteFramework:OnTextChanged(RPSEmoteFramework.EmoteList, self:GetText())
+						RPSEmoteFramework:GenerateScrollData()
 					</OnTextChanged>
 				</Scripts>
 			</EditBox>
@@ -201,7 +199,8 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						RPSEmoteFramework:EmotesCheckBoxProcess();
+						RPSEmoteFramework:ValidateFavourits();
+						RPSEmoteFramework:GenerateScrollData()
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
@@ -223,7 +222,7 @@
 
 			<Frame parentKey="ScrollBox" inherits="WowScrollBoxList">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeKey="$parent.SearchBox" relativePoint="BOTTOMLEFT" x="-10"/>
+				<Anchor point="TOPLEFT" relativeKey="$parent.SearchBox" relativePoint="BOTTOMLEFT"/>
 				<Anchor point="TOPRIGHT" relativeKey="$parent.FavCheckBox" relativePoint="BOTTOMRIGHT"/>
 				<Anchor point="BOTTOM"  relativePoint="BOTTOM" y='25'/>
 
@@ -231,7 +230,7 @@
 			</Frame>
 			<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeKey="$parent.RPSEmoteScrollBox" relativePoint="TOPRIGHT" x="-22"/>
+				<Anchor point="TOPLEFT" relativeKey="$parent.FavCheckBox" relativePoint="TOPRIGHT" y="-5"/>
 				<Anchor point="BOTTOMLEFT" relativeKey="$parent.RPSEmoteScrollBox" relativePoint="BOTTOMRIGHT"/>
 			</Anchors>
 			</EventFrame>
