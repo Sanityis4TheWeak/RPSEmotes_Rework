@@ -1,12 +1,19 @@
 <Ui>
-	<Button name="RPSEmoteEntryTemplate" virtual="true" text="place" justifyH="LEFT">
-		<Size x="150" y="25" />
+	<Button name="RPSEmoteEntryTemplate" parentKey="EntryButton" virtual="true" justifyH="LEFT">
+		<Size x="150" y="30" />
 		<NormalFont style="GameFontHighlightLeft" />
-		<!-- <Layers>
+		<Layers>
 			<Layer>
-			<FontString parentKey="Text" text="PLACE" justifyH="LEFT" inherits="SystemFont_Med1"/>
+				<FontString name="$parentName" inherits="SystemFont_Med1" parentKey="Text"
+					text="TEXT" justifyH="LEFT">
+					<Size x="140" y="30" />
+					<Anchors>
+						<Anchor point="LEFT" x="0" y="0" />
+					</Anchors>
+					<Color r="1" g="1" b="1" />
+				</FontString>
 			</Layer>
-		</Layers> -->
+		</Layers>
 		<Frames>
 			<Button name="$parentFavourites" parentKey="Favourites" justifyH="LEFT">
 				<Size x="16" y="16" />
@@ -22,17 +29,17 @@
 				<HighlightTexture file="Interface\COMMON\ReputationStar-Glow" alphaMode="ADD">
 					<TexCoords left="0.234375" right="0.765625" top="0.265625" bottom="0.828125" />
 				</HighlightTexture>
-				<!-- <Layers>
+				<Layers>
 					<Layer level="ARTWORK">
-						<Texture alphaMode="ADD" name="$parentIndicator" file="Interface\COMMON\FavoritesIcon">
+						<Texture alphaMode="ADD" name="$parentIndicator" parentKey="Indicator" file="Interface\COMMON\FavoritesIcon">
 							<Size x="16" y="16" />
 							<TexCoords left="0.03125" right="0.78125" top="0.03125" bottom="0.6875" />
 							<Anchors>
-								<Anchor relativePoint="TOPRIGHT"/>
+								<Anchor point="CENTER" relativeKey="$parent.Favourites" relativePoint="CENTER" />
 							</Anchors>
 						</Texture>
 					</Layer>
-				</Layers> -->
+				</Layers> 
 				<Scripts>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
@@ -61,12 +68,6 @@
 		<Anchors>
 			<Anchor point="CENTER" />
 		</Anchors>
-		<Scripts>
-			<OnLoad>
-				<!-- tinsert(UISpecialFrames, self:GetName()); -->
-			</OnLoad>
-		</Scripts>
-
 		<Layers>
 			<Layer level="ARTWORK">
 				<Texture file="Interface\AchievementFrame\UI-Achievement-MetalBorder-Left">
@@ -199,8 +200,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						RPSEmoteFramework:ValidateFavourits();
-						RPSEmoteFramework:GenerateScrollData()
+						RPSEmoteFramework:EmotesCheckBoxProcess()
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_CURSOR")

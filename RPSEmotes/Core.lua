@@ -185,12 +185,6 @@ RPSEmoteFramework.EmoteList = {
 if (not RPSEmoteFrameworkFavourites) then
 	RPSEmoteFrameworkFavourites = {};
 end
-
-RPSEmoteFramework.EmoteList.ToShow = {};
-RPSEmoteFramework.EmoteList.Initialized = false;
-
-
-
 function RPSEmoteFramework:SwitchMainFrame()
 	RPSEmote:SetShown(not RPSEmote:IsVisible());
 end
@@ -219,6 +213,8 @@ function RPSEmoteFramework:EnableDrag(frame)
 	frame:SetScript("OnDragStart", frame.StartMoving);
 	frame:SetScript("OnDragStop", frame.StopMovingOrSizing);
 end
+
+
 
 
 function RPSEmoteFramework:OnInitialize()
@@ -273,8 +269,17 @@ function RPSEmoteFramework:GenerateScrollData()
 	RPSEmoteFramework.ScrollView:SetElementInitializer("RPSEmoteEntryTemplate", Initializer)
 end
 
+
 function Initializer(button, data)
-	button:SetText("[ |cFFFD8A00" .. data[1] .. "|r ] " .. data[4])
+	button.Text:SetText("[ |cFFFD8A00" .. data[1] .. "|r ] " .. data[4])
+
+		button.Favourites.Indicator:Hide()
+
+	if RPSEmoteFramework:FavouritesSearch(data) then
+		button.Favourites.Indicator:Show()
+	end
+
+
 	button:SetScript("OnClick", function()
 		local message = ".mod standstate "..data[2]
 		C_ChatInfo.SendAddonMessage(RPSCoreFramework.Prefix, message, "WHISPER", UnitName("player"));
@@ -285,18 +290,19 @@ function Initializer(button, data)
 		GameTooltip:AddDoubleLine("Номер эмоции:", data[2], 1, 1, 1, 0.71, 1, 1);
 		GameTooltip:Show();
 	end)
+
 	button:SetScript("OnLeave", function()
 		GameTooltip:Hide();
 	end)
 
 	button.Favourites:SetScript("OnClick", function()
-			if (not RPSEmoteFramework:FavouritesSearch(data[1])) then
-				table.insert(RPSEmoteFrameworkFavourites, data);
-				print(RPSEmoteFrameworkFavourites[2])
-				return
-			end
-			table.remove(RPSEmoteFrameworkFavourites, data);
-			print(RPSEmoteFrameworkFavourites[1])
+		if (not RPSEmoteFramework:FavouritesSearch(data)) then 
+			table.insert(RPSEmoteFrameworkFavourites, data)
+			RPSEmoteFramework:EmotesCheckBoxProcess()
+			return
+		end
+		table.remove(RPSEmoteFrameworkFavourites, tonumber(RPSEmoteFramework:FavouritesSearch(data)))
+		RPSEmoteFramework:EmotesCheckBoxProcess()
 	end)
 end
 
@@ -307,28 +313,45 @@ function RPSEmoteFramework:CreateGameToolTip(self)
 	GameTooltip:Show();
 end
 
-local function PopulateNewDataProvider(newData)
+function RPSEmoteFramework:PopulateNewDataProvider(newData)
     DataProvider = CreateDataProvider(newData)
     RPSEmoteFramework.ScrollView:SetDataProvider(DataProvider)
 end
 
-function RPSEmoteFramework:ValidateFavourits()
 
-	PopulateNewDataProvider(RPSEmoteFrameworkFavourites)
+
+
+function RPSEmoteFramework:EmotesCheckBoxProcess()
+	if (RPSEmote.FavCheckBox:GetChecked()) then
+		RPSEmoteFramework:PopulateNewDataProvider(RPSEmoteFrameworkFavourites)
+	else
+		RPSEmoteFramework.OnTextChanged();
+	end
+
+	RPSEmoteFramework:GenerateScrollData()
 
 end
+
+function RPSEmoteFramework:FavouritesSearch(data)
+	for i, table_element in ipairs(RPSEmoteFrameworkFavourites) do
+		if data[1] == table_element[1] then
+			return i
+		end
+	end
+	return false
+end
+
+
 
 function RPSEmoteFramework.OnTextChanged()
     local query = RPSEmoteFramework.SearchBox:GetText();
 
-		if (RPSEmote.FavCheckBox:GetChecked()) then
-			RPSEmoteFramework:ValidateFavourits()
-			local matches = {}
-			print("Checked")
-			for _, element in ipairs(RPSEmoteFrameworkFavourites) do
-				table.insert(matches, element);
-			end
+	if (RPSEmote.FavCheckBox:GetChecked()) then	
+		local matches = {}
+		for _, element in ipairs(RPSEmoteFrameworkFavourites) do
+			table.insert(matches, element);
 		end
+	end
 
 
     local matches = {}
@@ -344,34 +367,11 @@ function RPSEmoteFramework.OnTextChanged()
         end
     end
 
-    PopulateNewDataProvider(matches)
+    RPSEmoteFramework:PopulateNewDataProvider(matches)
 end
 
 
 
-
-
-
--- function RPSEmoteFramework:ProcessFavourites(data)
--- 	print(data)
--- 	if (not self:FavouritesSearch(data[1])) then
--- 		table.insert(RPSEmoteFrameworkFavourites, data);
--- 		for _, emoteData in ipairs(RPSEmoteFrameworkFavourites) do
--- 			print(emoteData)
--- 		 end
--- 		return
--- 	end
--- 	table.remove(RPSEmoteFrameworkFavourites, data); -- Removes EmoteNumber from Favourites
--- end
-
-function RPSEmoteFramework:FavouritesSearch(number)
-	for i = 1, #RPSEmoteFrameworkFavourites do
-		if (RPSEmoteFrameworkFavourites[i] == number) then
-			return i;
-		end
-	end
-	return false
-end
 
 
 RPS_BACKDROP_MAINFRAME_32_64_5555 = {
